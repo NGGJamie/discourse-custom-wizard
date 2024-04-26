@@ -21,7 +21,7 @@ class CustomWizard::Subscription
           none: ['*'],
           standard: ['*'],
           business: ['*'],
-          community: ['*', "!#{CustomWizard::Wizard::GUEST_GROUP_ID}"]
+          community: ['*']
         },
         restart_on_revisit: {
           none: ['*'],
@@ -158,11 +158,14 @@ class CustomWizard::Subscription
   end
 
   def type
-    return :business
+    return :none unless subscribed?
+    return :business if business?
+    return :standard if standard?
+    :community if community?
   end
 
   def subscribed?
-    business?
+    standard? || business? || community?
   end
 
   def standard?
