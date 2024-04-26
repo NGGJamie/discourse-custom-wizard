@@ -12,19 +12,19 @@ class CustomWizard::Subscription
     {
       wizard: {
         required: {
-          none: [],
+          none: ['*'],
           standard: ['*'],
           business: ['*'],
           community: ['*']
         },
         permitted: {
-          none: [],
+          none: ['*'],
           standard: ['*'],
           business: ['*'],
           community: ['*', "!#{CustomWizard::Wizard::GUEST_GROUP_ID}"]
         },
         restart_on_revisit: {
-          none: [],
+          none: ['*'],
           standard: ['*'],
           business: ['*'],
           community: ['*']
@@ -32,19 +32,19 @@ class CustomWizard::Subscription
       },
       step: {
         condition: {
-          none: [],
+          none: ['*'],
           standard: ['*'],
           business: ['*'],
           community: ['*']
         },
         required_data: {
-          none: [],
+          none: ['*'],
           standard: ['*'],
           business: ['*'],
           community: ['*']
         },
         permitted_params: {
-          none: [],
+          none: ['*'],
           standard: ['*'],
           business: ['*'],
           community: ['*']
@@ -52,19 +52,19 @@ class CustomWizard::Subscription
       },
       field: {
         condition: {
-          none: [],
+          none: ['*'],
           standard: ['*'],
           business: ['*'],
           community: ['*']
         },
         type: {
-          none: ['text', 'textarea', 'text_only', 'date', 'time', 'date_time', 'number', 'checkbox', 'dropdown', 'upload'],
+          none: ['*'],
           standard: ['*'],
           business: ['*'],
           community: ['*']
         },
         realtime_validations: {
-          none: [],
+          none: ['*'],
           standard: ['*'],
           business: ['*'],
           community: ['*']
@@ -72,30 +72,30 @@ class CustomWizard::Subscription
       },
       action: {
         type: {
-          none: ['create_topic', 'update_profile', 'open_composer', 'route_to'],
-          standard: ['create_topic', 'update_profile', 'open_composer', 'route_to', 'send_message', 'watch_categories', 'watch_tags', 'add_to_group'],
+          none: ['*'],
+          standard: ['*'],
           business: ['*'],
           community: ['*']
         }
       },
       custom_field: {
         klass: {
-          none: ['topic', 'post'],
-          standard: ['topic', 'post'],
+          none: ['*'],
+          standard: ['*'],
           business: ['*'],
           community: ['*']
         },
         type: {
-          none: ['string', 'boolean', 'integer'],
-          standard: ['string', 'boolean', 'integer'],
+          none: ['*'],
+          standard: ['*'],
           business: ['*'],
           community: ['*']
         }
       },
       api: {
         all: {
-          none: [],
-          standard: [],
+          none: ['*'],
+          standard: ['*'],
           business: ['*'],
           community: ['*']
         }
@@ -158,14 +158,11 @@ class CustomWizard::Subscription
   end
 
   def type
-    return :none unless subscribed?
-    return :business if business?
-    return :standard if standard?
-    :community if community?
+    return :business
   end
 
   def subscribed?
-    standard? || business? || community?
+    business?
   end
 
   def standard?
